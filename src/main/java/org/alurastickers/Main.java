@@ -1,7 +1,9 @@
 package org.alurastickers;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -13,7 +15,7 @@ public class Main {
 
         // Fazer uma conexão HTTP e buscar os tops 10 filmes
 
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json";
+        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
         var request = HttpRequest.newBuilder(endereco).GET().build();
@@ -31,6 +33,15 @@ public class Main {
         float star;
 
         for (Map<String, String> filme : listaDeFilmes) {
+
+            String urlImagem = filme.get("image");
+            String titulo = filme.get("title");
+            InputStream inputStream = new URL(urlImagem).openStream();
+
+            String nomeArquivo = titulo.replace(":", "-")  + ".png";
+
+            var geradora = new GeradorDeFigurinhas();
+            geradora.criar(inputStream, nomeArquivo);
 
             System.out.println("\u001b[1m Título: \u001b[m" + filme.get("title"));
             System.out.println("\u001b[1m Poster: \u001b[m" + filme.get("image"));
