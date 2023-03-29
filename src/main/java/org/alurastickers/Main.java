@@ -14,7 +14,6 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         // Fazer uma conexão HTTP e buscar os tops 10 filmes
-
         String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
         URI endereco = URI.create(url);
         var client = HttpClient.newHttpClient();
@@ -23,13 +22,11 @@ public class Main {
         String body = response.body();
 
         // Extrair só os dados que interessam (título, poster e classificação)
-
         var parser = new JsonParser();
 
         List<Map<String, String>> listaDeFilmes = parser.parse(body);
 
         // Exibir e manipular os dados
-
         float star;
 
         for (Map<String, String> filme : listaDeFilmes) {
